@@ -134,7 +134,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
                 Name = "test",
                 Description = "test",
                 Details = "",
-                Price = "5.8",
+                Price = "5,8",
                 Stock = "3"
             };
             var context = new ValidationContext(product, null, null);
