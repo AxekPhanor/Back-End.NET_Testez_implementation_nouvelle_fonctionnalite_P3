@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Localization;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
@@ -27,9 +29,9 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             _orderRepository = orderRepository;
             _localizer = localizer;
         }
+
         public List<ProductViewModel> GetAllProductsViewModel()
         {
-             
             IEnumerable<Product> productEntities = GetAllProducts();
             return MapToViewModel(productEntities);
         }
@@ -40,13 +42,13 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             foreach (Product product in productEntities)
             {
                 products.Add(new ProductViewModel
-                {
-                    Id = product.Id,
-                    Stock = product.Quantity.ToString(),
-                    Price = product.Price.ToString(CultureInfo.InvariantCulture),
-                    Name = product.Name,
-                    Description = product.Description,
-                    Details = product.Details
+                    {
+                        Id = product.Id,
+                        Stock = product.Quantity.ToString(),
+                        Price = product.Price.ToString(CultureInfo.InvariantCulture),
+                        Name = product.Name,
+                        Description = product.Description,
+                        Details = product.Details
                 });
             }
 
@@ -65,7 +67,6 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return products.Find(p => p.Id == id);
         }
 
-
         public Product GetProductById(int id)
         {
             List<Product> products = GetAllProducts().ToList();
@@ -83,6 +84,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             var products = await _productRepository.GetProduct();
             return products;
         }
+
         public void UpdateProductQuantities()
         {
             Cart cart = (Cart) _cart;
@@ -94,8 +96,12 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
 
         public void SaveProduct(ProductViewModel product)
         {
-            var productToAdd = MapToProductEntity(product);
-            _productRepository.SaveProduct(productToAdd);
+            var context = new ValidationContext(product);
+            if (Validator.TryValidateObject(product, context, null))
+            {
+                var productToAdd = MapToProductEntity(product);
+                _productRepository.SaveProduct(productToAdd);
+            }
         }
 
         private static Product MapToProductEntity(ProductViewModel product)
