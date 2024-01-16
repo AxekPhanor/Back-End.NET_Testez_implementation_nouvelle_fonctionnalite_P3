@@ -23,19 +23,19 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             switch (language)
             {
                 case ("English"):
-                    culture = "en-GB";
+                    culture = "en";
                     break;
                 case ("French"):
-                    culture = "fr-FR";
+                    culture = "fr";
                     break;
                 case ("Spanish"):
                     culture = "es";
                     break;
                 default:
-                    culture = "en-GB";
+                    culture = "en";
                     break;
             }
-
+            
             return culture;
         }
 
