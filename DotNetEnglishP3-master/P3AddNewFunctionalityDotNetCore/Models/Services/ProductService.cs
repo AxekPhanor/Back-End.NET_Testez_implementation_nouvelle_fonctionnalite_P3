@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Localization;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using P3AddNewFunctionalityDotNetCore.Models.Repositories;
@@ -15,11 +18,16 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
     {
         private readonly ICart _cart;
         private readonly IProductRepository _productRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IStringLocalizer<ProductService> _localizer;
 
-        public ProductService(ICart cart, IProductRepository productRepository)
+        public ProductService(ICart cart, IProductRepository productRepository,
+            IOrderRepository orderRepository, IStringLocalizer<ProductService> localizer)
         {
             _cart = cart;
             _productRepository = productRepository;
+            _orderRepository = orderRepository;
+            _localizer = localizer;
         }
 
         public List<ProductViewModel> GetAllProductsViewModel()
@@ -30,7 +38,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
 
         private static List<ProductViewModel> MapToViewModel(IEnumerable<Product> productEntities)
         {
-            List <ProductViewModel> products = new();
+            List <ProductViewModel> products = new List<ProductViewModel>();
             foreach (Product product in productEntities)
             {
                 products.Add(new ProductViewModel
@@ -98,7 +106,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
 
         private static Product MapToProductEntity(ProductViewModel product)
         {
-            Product productEntity = new()
+            Product productEntity = new Product
             {
                 Name = product.Name,
                 Price = double.Parse(product.Price),
