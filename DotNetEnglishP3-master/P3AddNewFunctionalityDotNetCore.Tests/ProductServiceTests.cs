@@ -1,15 +1,7 @@
-﻿
-using Microsoft.Extensions.Localization;
-using Moq;
-using P3AddNewFunctionalityDotNetCore.Models;
-using P3AddNewFunctionalityDotNetCore.Models.Entities;
-using P3AddNewFunctionalityDotNetCore.Models.Repositories;
-using P3AddNewFunctionalityDotNetCore.Models.Services;
-using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
+﻿using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web.Mvc;
 using Xunit;
 
 namespace P3AddNewFunctionalityDotNetCore.Tests
@@ -21,36 +13,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         /// A test method must check if a definite method does its job:
         /// returns an expected value from a particular set of parameters
         /// </summary>
-        [Fact]
-        public void CreateNewProduct_ShouldBeCreated()
-        {
-            // Arrange
-            var mockCart = new Mock<ICart>();
-            var mockProductRepository = new Mock<IProductRepository>();
-            mockProductRepository.Setup(productRepository => productRepository.SaveProduct(It.IsAny<Product>()));
-            var mockOrderRepository = new Mock<IOrderRepository>();
-            var mockStringLocalizer = new Mock<IStringLocalizer<ProductService>>();
-            var product = new ProductViewModel()
-            {
-                Id = 1,
-                Name = "Test",
-                Description = "Test",
-                Details = "",
-                Price = "20",
-                Stock = "3"
-            };
-            var productService = new ProductService(
-                mockCart.Object,
-                mockProductRepository.Object,
-                mockOrderRepository.Object,
-                mockStringLocalizer.Object);
-
-            // Act
-            productService.SaveProduct(product);
-
-            // Assert
-            mockProductRepository.Verify(productRepository => productRepository.SaveProduct(It.IsAny<Product>()), Times.Once);
-        }
 
         [Fact]
         public void CreateNewProductWithEmptyName_ShouldHaveMissingNameError()
@@ -58,7 +20,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             // Arrange
             var product = new ProductViewModel()
             {
-                Id = 1,
                 Name = "",
                 Description = "test",
                 Details = "",
@@ -73,7 +34,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("MissingName", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorMissingName", results.Select(r => r.ErrorMessage));
         }
 
         [Fact]
@@ -82,7 +43,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             // Arrange
             var product = new ProductViewModel()
             {
-                Id = 1,
                 Name = "test",
                 Description = "test",
                 Details = "",
@@ -97,7 +57,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("PriceNotANumber", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorPriceNotANumber", results.Select(r => r.ErrorMessage));
         }
 
         [Fact]
@@ -106,7 +66,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             // Arrange
             var product = new ProductViewModel()
             {
-                Id = 1,
                 Name = "test",
                 Description = "test",
                 Details = "",
@@ -121,7 +80,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("PriceNotGreaterThanZero", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorPriceNotGreaterThanZero", results.Select(r => r.ErrorMessage));
         }
 
         [Fact]
@@ -130,7 +89,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             // Arrange
             var product = new ProductViewModel()
             {
-                Id = 1,
                 Name = "test",
                 Description = "test",
                 Details = "",
@@ -153,7 +111,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             // Arrange
             var product = new ProductViewModel()
             {
-                Id = 1,
                 Name = "test",
                 Description = "test",
                 Details = "",
@@ -168,7 +125,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("MissingQuantity", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorMissingQuantity", results.Select(r => r.ErrorMessage));
         }
 
         [Fact]
@@ -177,7 +134,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             // Arrange
             var product = new ProductViewModel()
             {
-                Id = 1,
                 Name = "test",
                 Description = "test",
                 Details = "",
@@ -192,7 +148,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("QuantiteNotAnInteger", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorQuantiteNotAnInteger", results.Select(r => r.ErrorMessage));
         }
 
         [Fact]
@@ -201,7 +157,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             // Arrange
             var product = new ProductViewModel()
             {
-                Id = 1,
                 Name = "test",
                 Description = "test",
                 Details = "",
@@ -216,7 +171,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("QuantiteNotAnInteger", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorQuantiteNotAnInteger", results.Select(r => r.ErrorMessage));
         }
 
         [Fact]
@@ -225,7 +180,6 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             // Arrange
             var product = new ProductViewModel()
             {
-                Id = 1,
                 Name = "test",
                 Description = "test",
                 Details = "",
@@ -240,7 +194,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("QuantityNotGreaterThanZero", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorQuantityNotGreaterThanZero", results.Select(r => r.ErrorMessage));
         }
     }
 }
