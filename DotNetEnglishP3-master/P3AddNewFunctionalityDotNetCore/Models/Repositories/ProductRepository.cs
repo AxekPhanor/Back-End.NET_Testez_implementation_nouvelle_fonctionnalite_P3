@@ -48,8 +48,8 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Repositories
             else
             {
                 _context.Product.Update(product);
-                _context.SaveChanges();
-            }   
+            }
+            _context.SaveChanges();
         }
 
         public void SaveProduct(Product product)
