@@ -148,7 +148,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("ErrorQuantiteNotAnInteger", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorQuantityNotAnInteger", results.Select(r => r.ErrorMessage));
         }
 
         [Fact]
@@ -171,7 +171,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             // Assert
             Assert.False(isModelStateValid);
-            Assert.Contains("ErrorQuantiteNotAnInteger", results.Select(r => r.ErrorMessage));
+            Assert.Contains("ErrorQuantityNotAnInteger", results.Select(r => r.ErrorMessage));
         }
 
         [Fact]
