@@ -132,7 +132,7 @@
   <data name="ErrorPriceNotGreaterThanZero" xml:space="preserve">
     <value>The price must be greater than zero</value>
   </data>
-  <data name="ErrorQuantiteNotAnInteger" xml:space="preserve">
+  <data name="ErrorQuantityNotAnInteger" xml:space="preserve">
     <value>The quantity must be an integer</value>
   </data>
   <data name="ErrorQuantityNotGreaterThanZero" xml:space="preserve">

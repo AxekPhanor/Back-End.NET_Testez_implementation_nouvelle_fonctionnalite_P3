@@ -17,7 +17,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
         public string Details { get; set; }
 
         [Required(ErrorMessage = "ErrorMissingQuantity")]
-        [Integer(ErrorMessage = "ErrorQuantiteNotAnInteger")]
+        [Integer(ErrorMessage = "ErrorQuantityNotAnInteger")]
         [Positive(ErrorMessage = "ErrorQuantityNotGreaterThanZero")]
         public string Stock { get; set; }
 
